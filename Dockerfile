@@ -37,7 +37,7 @@ COPY --chown=www-data:www-data --from=node-builder /app/public/build /var/www/ht
 
 # Create ALL necessary storage directories
 RUN mkdir -p storage/app/public/logos \
-    storage/app/livewire-tmp \
+    storage/app/public/livewire-tmp \
     storage/framework/cache/data \
     storage/framework/sessions \
     storage/framework/testing \
