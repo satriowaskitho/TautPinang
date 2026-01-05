@@ -35,17 +35,19 @@ COPY --chown=www-data:www-data --from=composer-builder /app /var/www/html
 # Copy built Vite assets from node-builder
 COPY --chown=www-data:www-data --from=node-builder /app/public/build /var/www/html/public/build
 
-# Create storage directory structure
+# Create complete storage directory structure
 RUN mkdir -p storage/app/public \
-    storage/framework/cache \
+    storage/framework/cache/data \
     storage/framework/sessions \
+    storage/framework/testing \
     storage/framework/views \
     storage/logs \
     bootstrap/cache
 
-# Create storage symlink (remove if exists first)
-RUN rm -rf public/storage \
-    && ln -s ../storage/app/public public/storage
+# Remove existing symlink if present and create new one
+RUN cd /var/www/html/public \
+    && rm -rf storage \
+    && ln -s ../storage/app/public storage
 
 # Set proper permissions
 RUN chown -R www-data:www-data /var/www/html \
