@@ -49,9 +49,11 @@ RUN cd /var/www/html/public \
     && rm -rf storage \
     && ln -s ../storage/app/public storage
 
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+# Set proper permissions (CRITICAL!)
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && find /var/www/html/storage -type d -exec chmod 775 {} \; \
+    && find /var/www/html/storage -type f -exec chmod 664 {} \; \
+    && chmod -R 775 /var/www/html/bootstrap/cache
 
 USER www-data
 
