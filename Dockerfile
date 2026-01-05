@@ -46,7 +46,7 @@ RUN mkdir -p storage/app/public/logos \
     bootstrap/cache
 
 # Remove existing symlink if present and create new one
-RUN cd public && \
+RUN cd /var/www/html/public \
     rm -rf storage && \
     ln -s ../storage/app/public storage && \
     cd ..
