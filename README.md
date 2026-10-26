@@ -1,3 +1,32 @@
+# TautPinang
+
+## Pembaruan dependensi dan Docker
+
+Project kini memakai Laravel **12.70.1**, Jetstream **5.5.3**, Livewire **3.8.11**,
+dan PHP **8.3.36**. Seluruh 53 advisori Composer yang sebelumnya ditemukan
+sudah diselesaikan: audit terbaru melaporkan **0 advisori**. Suite PHPUnit
+menjalankan 40 test: **33 lulus, 7 dilewati, 0 gagal**.
+
+Tersedia `Dockerfile`, `compose.yaml`, serta `.env.docker.example` untuk stack
+NGINX/PHP-FPM dan MySQL dengan volume persisten. Ikuti [panduan Docker](docs/docker.md)
+untuk konfigurasi, menjalankan aplikasi, dan pembaruan tanpa menghapus data.
+
+## Pembaruan keamanan PHP — 23 Oktober 2026
+
+Project ini menggunakan **PHP 8.3.36 atau patch PHP 8.3 yang lebih baru**
+(`~8.3.36`). Dockerfile mengunci image CLI dan FPM-NGINX ke PHP 8.3.36 beserta
+digest multi-architecture yang sudah diperiksa di registry. Composer memeriksa
+versi PHP dan extension di tahap build maupun image produksi.
+
+Ini menindaklanjuti **CVE-2026-109618** dan **CVE-2026-109619** dalam
+[advisori resmi PHP tanggal 21 Oktober 2026](https://www.php.net/archive/2026.php#2026-10-21-5).
+Kerentanan berada di runtime PHP dan dapat terpicu sebelum aplikasi berjalan.
+**Push kode belum memperbarui server: image harus dibangun ulang dan semua
+container/worker lama harus diganti.**
+
+Panduan rebuild, verifikasi PHP-FPM, dan inventaris tindak lanjut tersedia di
+[docs/php-security-update.md](docs/php-security-update.md).
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

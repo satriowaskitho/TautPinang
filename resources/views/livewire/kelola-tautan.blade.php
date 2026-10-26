@@ -106,7 +106,7 @@
                 <!-- Search -->
                 <div class="flex-1">
                     <div class="relative">
-                        <input type="text" wire:model.debounce.300ms="search"
+                        <input type="text" wire:model.live.debounce.300ms="search"
                             placeholder="Cari tautan..."
                             class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition-all duration-200">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -127,14 +127,14 @@
 
                 <!-- Filters -->
                 <div class="flex gap-3">
-                    <select wire:model="filterStatus"
+                    <select wire:model.live="filterStatus"
                         class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200">
                         <option value="all">Semua Status</option>
                         <option value="active">Aktif</option>
                         <option value="inactive">Nonaktif</option>
                     </select>
 
-                    <select wire:model="perPage"
+                    <select wire:model.live="perPage"
                         class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200">
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -223,7 +223,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-4 flex-1">
                                 <!-- Checkbox -->
-                                <input type="checkbox" wire:model="selectedItems" value="{{ $tautan->id }}"
+                                <input type="checkbox" wire:model.live="selectedItems" value="{{ $tautan->id }}"
                                     class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
                                 <!-- Logo + Status Badge Container -->
@@ -404,7 +404,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-4 flex-1">
                                         <!-- Checkbox -->
-                                        <input type="checkbox" wire:model="selectedItems" value="{{ $tautan->id }}"
+                                        <input type="checkbox" wire:model.live="selectedItems" value="{{ $tautan->id }}"
                                             class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
                                         <!-- Logo -->

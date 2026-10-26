@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +16,14 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    /**
+     * Match database defaults on new models before they are reloaded.
+     */
+    protected $attributes = [
+        'role' => 'user',
+        'status' => 'active',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +63,7 @@ class User extends Authenticatable
         'status' => 'string',
     ];
 
-      /**
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
@@ -89,7 +96,7 @@ class User extends Authenticatable
     {
         return [
             'user' => 'User',
-            'admin' => 'Administrator'
+            'admin' => 'Administrator',
         ][$this->role] ?? 'User';
     }
 
@@ -133,7 +140,7 @@ class User extends Authenticatable
         return [
             'active' => 'Active',
             'inactive' => 'Inactive',
-            'disabled' => 'Disabled'
+            'disabled' => 'Disabled',
         ][$this->status] ?? 'Active';
     }
 
@@ -145,7 +152,7 @@ class User extends Authenticatable
         return [
             'active' => 'success',
             'inactive' => 'warning',
-            'disabled' => 'danger'
+            'disabled' => 'danger',
         ][$this->status] ?? 'success';
     }
 

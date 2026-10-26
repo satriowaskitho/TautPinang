@@ -62,7 +62,7 @@
         <!-- Structured Data (JSON-LD) -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
+            "@@context": "https://schema.org",
             "@type": "WebPage",
             "name": "{{ $tautan->title ?? 'Tautan' }} | Taut Pinang",
             "description": "{{ $tautan->description ?? 'Halaman tautan resmi ' . ($tautan->title ?? 'Tautan') . ' - BPS Kota Tanjungpinang' }}",

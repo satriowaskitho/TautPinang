@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
 class PasswordConfirmationTest extends TestCase
@@ -30,6 +29,8 @@ class PasswordConfirmationTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('auth.password_confirmed_at');
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_password_is_not_confirmed_with_invalid_password(): void
@@ -40,6 +41,8 @@ class PasswordConfirmationTest extends TestCase
             'password' => 'wrong-password',
         ]);
 
-        $response->assertSessionHasErrors();
+        $response->assertSessionHasErrors('password');
+        $response->assertSessionMissing('auth.password_confirmed_at');
+        $this->assertAuthenticatedAs($user);
     }
 }

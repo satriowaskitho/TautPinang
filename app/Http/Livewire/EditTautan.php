@@ -508,10 +508,10 @@ class EditTautan extends Component
             }
         }
 
-        $this->dispatchBrowserEvent('logo-uploaded', [
-            'logoPreviewUrl' => $this->logoPreviewUrl ?: '',
-            'fileName' => $this->logoUpload ? $this->logoUpload->getClientOriginalName() : ''
-        ]);
+        $this->dispatch('logo-uploaded',
+            logoPreviewUrl: $this->logoPreviewUrl ?: '',
+            fileName: $this->logoUpload ? $this->logoUpload->getClientOriginalName() : ''
+        );
     }
 
     public function updatedUseUploadedLogo()
@@ -841,7 +841,7 @@ class EditTautan extends Component
             $this->stylesJson = json_encode($this->styles, JSON_PRETTY_PRINT);
             $this->generatePreview();
 
-            $this->emit('stylesUpdated');  // Sudah benar
+            $this->dispatch('stylesUpdated');  // Sudah benar
 
             session()->flash('success', 'JSON styles berhasil diterapkan!');
         } catch (\Exception $e) {
@@ -868,7 +868,7 @@ class EditTautan extends Component
             if (json_last_error() === JSON_ERROR_NONE && is_array($decodedStyles)) {
                 $this->styles = $this->deepMergeArrays($this->styles, $decodedStyles);
                 $this->generatePreview();
-                $this->emit('stylesUpdated');
+                $this->dispatch('stylesUpdated');
             }
         } catch (\Exception $e) {
             // Invalid JSON, keep current styles
@@ -1133,10 +1133,10 @@ class EditTautan extends Component
 
         try {
             $this->generatedHtml = $this->buildHtml(false);
-            $this->emit('htmlGenerated');
+            $this->dispatch('htmlGenerated');
             session()->flash('success', 'HTML berhasil digenerate!');
         } catch (\Exception $e) {
-            $this->emit('htmlError', $e->getMessage());
+            $this->dispatch('htmlError', message: $e->getMessage());
             session()->flash('error', 'Error generating HTML: ' . $e->getMessage());
         } finally {
             // Restore slug untuk UI
@@ -1193,7 +1193,7 @@ class EditTautan extends Component
 
         if (empty($validLinks)) {
             logger('❌ No valid links found');
-            $this->emit('databaseError', 'Minimal harus ada satu link yang valid.');
+            $this->dispatch('databaseError', message: 'Minimal harus ada satu link yang valid.');
             session()->flash('error', 'Minimal harus ada satu link yang valid.');
             $this->slug = $originalSlug;
             return;
@@ -1206,7 +1206,7 @@ class EditTautan extends Component
             ->first();
 
         if ($existingTautan) {
-            $this->emit('databaseError', 'Slug "' . $this->slug . '" sudah digunakan oleh tautan lain.');
+            $this->dispatch('databaseError', message: 'Slug "' . $this->slug . '" sudah digunakan oleh tautan lain.');
             session()->flash('error', 'Slug sudah digunakan oleh tautan lain. Gunakan slug yang berbeda.');
             $this->slug = $originalSlug;
             return;
@@ -1257,14 +1257,14 @@ class EditTautan extends Component
                     logger('✅ storeAs() returned: ' . $storedPath);
 
                     // Verify file exists di filesystem
-                    $fullPath = storage_path('app/public/' . $storedPath);
+                    $fullPath = Storage::disk('public')->path($storedPath);
                     logger('🔍 Checking file at: ' . $fullPath);
 
-                    if (file_exists($fullPath)) {
-                        logger('✅ File exists! Size: ' . filesize($fullPath) . ' bytes');
+                    if (Storage::disk('public')->exists($storedPath)) {
+                        logger('✅ File exists! Size: ' . Storage::disk('public')->size($storedPath) . ' bytes');
 
                         // Path untuk database (URL accessible)
-                        $logoPath = Storage::url($storedPath);
+                        $logoPath = Storage::disk('public')->url($storedPath);
                         $judulGambar = $filename;
 
                         logger('✅ Final logo_url for DB: ' . $logoPath);
@@ -1317,14 +1317,14 @@ class EditTautan extends Component
             // ✅ GENERATE PUBLIC URL
             $publicUrl = route('tautan.show', $tautan->slug);
 
-            $this->emit('databaseSaved');
+            $this->dispatch('databaseSaved');
             session()->flash('success', 'Tautan berhasil diperbarui!');
             session()->flash('public_url', $publicUrl);
 
             logger('✅ Tautan updated successfully: ' . $publicUrl);
             logger('📸 Logo URL: ' . $logoPath);
         } catch (\Exception $e) {
-            $this->emit('databaseError', $e->getMessage());
+            $this->dispatch('databaseError', message: $e->getMessage());
             session()->flash('error', 'Gagal menyimpan: ' . $e->getMessage());
             logger('❌ Error updating tautan: ' . $e->getMessage());
         } finally {

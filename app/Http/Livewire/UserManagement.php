@@ -156,7 +156,7 @@ class UserManagement extends Component
         $this->resetLoading();
         $this->closeModal();
         $this->resetCreateForm();
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'User created successfully']);
+        $this->dispatch('notify', type: 'success', message: 'User created successfully');
     }
 
     public function closeModal()
@@ -210,7 +210,7 @@ class UserManagement extends Component
     public function openEditModal($userId)
     {
         if (!$this->canEditUser($userId)) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot edit another admin user']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot edit another admin user');
             return;
         }
 
@@ -236,14 +236,14 @@ class UserManagement extends Component
         // Check if trying to edit another admin (including role change)
         if ($user->role === 'admin' && $user->id !== $currentUser->id) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot edit another admin user']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot edit another admin user');
             return;
         }
 
         // Additional check: prevent changing role to admin if current user is not admin (extra safety)
         if ($this->editRole === 'admin' && !$currentUser->isAdmin()) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You do not have permission to assign admin role']);
+            $this->dispatch('notify', type: 'error', message: 'You do not have permission to assign admin role');
             return;
         }
 
@@ -255,13 +255,13 @@ class UserManagement extends Component
         $this->resetLoading();
         $this->closeModal();
         $this->resetEditForm();
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'User role updated successfully']);
+        $this->dispatch('notify', type: 'success', message: 'User role updated successfully');
     }
 
     public function openPasswordModal($userId)
     {
         if (!$this->canEditUser($userId)) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot reset password of another admin user']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot reset password of another admin user');
             return;
         }
 
@@ -281,7 +281,7 @@ class UserManagement extends Component
 
         if (!$this->canEditUser($this->passwordUserId)) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot reset password of another admin user']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot reset password of another admin user');
             return;
         }
 
@@ -293,7 +293,7 @@ class UserManagement extends Component
         $this->resetLoading();
         $this->closeModal();
         $this->resetPasswordForm();
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Password reset successfully']);
+        $this->dispatch('notify', type: 'success', message: 'Password reset successfully');
     }
 
     
@@ -306,14 +306,14 @@ class UserManagement extends Component
 
         if ($user->id === $currentUser->id) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot deactivate your own account']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot deactivate your own account');
             return;
         }
 
         // Check if trying to deactivate another admin
         if ($user->role === 'admin' && $user->id !== $currentUser->id) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot deactivate another admin user']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot deactivate another admin user');
             return;
         }
 
@@ -324,7 +324,7 @@ class UserManagement extends Component
         $user->tautan()->update(['status' => 'inactive']);
 
         $this->resetLoading();
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'User deactivated successfully and all links disabled']);
+        $this->dispatch('notify', type: 'success', message: 'User deactivated successfully and all links disabled');
     }
 
     public function activateUser($userId)
@@ -335,7 +335,7 @@ class UserManagement extends Component
 
         if ($user->id === Auth::id()) {
             $this->resetLoading();
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'You cannot activate your own account from this interface']);
+            $this->dispatch('notify', type: 'error', message: 'You cannot activate your own account from this interface');
             return;
         }
 
@@ -346,7 +346,7 @@ class UserManagement extends Component
         $user->tautan()->update(['status' => 'active']);
 
         $this->resetLoading();
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'User activated successfully and all links re-enabled']);
+        $this->dispatch('notify', type: 'success', message: 'User activated successfully and all links re-enabled');
     }
 
     public function render()

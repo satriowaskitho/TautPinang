@@ -1,0 +1,92 @@
+name: PHP runtime security
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      APP_ENV: testing
+      APP_URL: http://localhost:8080
+      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      DB_PASSWORD: ci-test-password
+      DB_ROOT_PASSWORD: ci-test-root-password
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build test image
+        run: docker build --pull --target testing --tag tautpinang:tests .
+
+      - name: Audit complete Composer lockfile
+        run: docker run --rm --entrypoint composer tautpinang:tests audit --locked
+
+      - name: Validate Composer manifest and platform
+        run: |
+          docker run --rm --entrypoint composer tautpinang:tests validate --strict --no-check-publish
+          docker run --rm --entrypoint composer tautpinang:tests check-platform-reqs
+
+      - name: Run complete PHPUnit suite
+        run: docker run --rm --entrypoint php tautpinang:tests vendor/bin/phpunit --colors=never --fail-on-warning
+
+      - name: Build patched production image
+        run: docker build --pull --tag tautpinang:local .
+
+      - name: Verify CLI and FPM runtimes
+        run: |
+          docker run --rm --entrypoint php tautpinang:local -v
+          docker run --rm --entrypoint php-fpm tautpinang:local -v
+          docker run --rm --entrypoint composer tautpinang:local check-platform-reqs --no-dev
+          docker run --rm --entrypoint php tautpinang:local -r '
+            if (PHP_VERSION_ID < 80336 || PHP_VERSION_ID >= 80400) {
+                fwrite(STDERR, "Expected patched PHP 8.3 runtime.\n");
+                exit(1);
+            }
+            if (ini_get("session.upload_progress.enabled")) {
+                fwrite(STDERR, "Upload progress must be disabled.\n");
+                exit(1);
+            }
+          '
+          docker run --rm --entrypoint php-fpm tautpinang:local -i > /tmp/tautpinang-fpm-info.txt
+          grep -Eq '^session.upload_progress.enabled => Off => Off$' /tmp/tautpinang-fpm-info.txt
+
+      - name: Start Compose stack and migrate fresh test database
+        run: |
+          docker compose config --quiet
+          docker compose up --detach --wait --wait-timeout 120 --no-build
+          docker compose exec -T app php artisan migrate --force --no-interaction
+
+      - name: Smoke test login through NGINX and PHP-FPM
+        run: |
+          for attempt in {1..30}; do
+            status=$(curl --silent --output /tmp/tautpinang-login.html --write-out '%{http_code}' http://127.0.0.1:8080/login || true)
+            if [ "$status" = "200" ] && grep -q 'name="email"' /tmp/tautpinang-login.html; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+
+      - name: Verify upload volume survives container replacement
+        run: |
+          docker compose exec -T app sh -c 'printf persistent-upload > storage/app/public/ci-upload.txt'
+          docker compose up --detach --force-recreate --no-deps --wait --wait-timeout 120 app
+          test "$(curl --fail --silent http://127.0.0.1:8080/storage/ci-upload.txt)" = "persistent-upload"
+          docker compose exec -T app php artisan migrate:status --no-interaction
+
+      - name: Container logs
+        if: failure()
+        run: docker compose logs || true
+
+      - name: Stop test container
+        if: always()
+        run: docker compose down --volumes || true

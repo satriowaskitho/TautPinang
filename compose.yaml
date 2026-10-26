@@ -1,0 +1,69 @@
+name: tautpinang
+
+services:
+  app:
+    build:
+      context: .
+      target: production
+    image: tautpinang:local
+    restart: unless-stopped
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8080}:8080"
+    environment:
+      APP_NAME: "${APP_NAME:-TautPinang}"
+      APP_ENV: "${APP_ENV:-production}"
+      APP_DEBUG: "false"
+      APP_KEY: "${APP_KEY:?Set APP_KEY in .env.docker}"
+      APP_URL: "${APP_URL:-https://localhost}"
+      LOG_CHANNEL: stderr
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_DATABASE: "${DB_DATABASE:-tautpinang}"
+      DB_USERNAME: "${DB_USERNAME:-tautpinang}"
+      DB_PASSWORD: "${DB_PASSWORD:?Set DB_PASSWORD in .env.docker}"
+      SESSION_DRIVER: file
+      CACHE_DRIVER: file
+      QUEUE_CONNECTION: sync
+      MAIL_MAILER: "${MAIL_MAILER:-log}"
+      MAIL_HOST: "${MAIL_HOST:-}"
+      MAIL_PORT: "${MAIL_PORT:-587}"
+      MAIL_USERNAME: "${MAIL_USERNAME:-}"
+      MAIL_PASSWORD: "${MAIL_PASSWORD:-}"
+      MAIL_ENCRYPTION: "${MAIL_ENCRYPTION:-tls}"
+      MAIL_FROM_ADDRESS: "${MAIL_FROM_ADDRESS:-noreply@example.com}"
+      GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID:-}"
+      GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET:-}"
+      GOOGLE_REDIRECT_URI: "${GOOGLE_REDIRECT_URI:-}"
+    volumes:
+      - uploads:/var/www/html/storage/app/public
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--output", "/dev/null", "http://localhost:8080/login"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+
+  db:
+    image: mysql:8.4@sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-tautpinang}"
+      MYSQL_USER: "${DB_USERNAME:-tautpinang}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:?Set DB_PASSWORD in .env.docker}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in .env.docker}"
+    volumes:
+      - database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql --user=\"$$MYSQL_USER\" --database=\"$$MYSQL_DATABASE\" --execute=\"SELECT 1\" --silent"]
+      interval: 5s
+      timeout: 5s
+      start_period: 30s
+      retries: 20
+
+volumes:
+  database:
+  uploads:

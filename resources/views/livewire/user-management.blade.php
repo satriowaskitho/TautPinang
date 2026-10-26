@@ -263,7 +263,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                        <input type="text" wire:model="createName"
+                                        <input type="text" wire:model.live="createName"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('createName')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -273,7 +273,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                                        <input type="email" wire:model="createEmail"
+                                        <input type="email" wire:model.live="createEmail"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('createEmail')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -283,7 +283,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
-                                        <select wire:model="createRole"
+                                        <select wire:model.live="createRole"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                             <option value="user">User</option>
                                             <option value="admin">Administrator</option>
@@ -296,7 +296,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                                        <input type="password" wire:model="createPassword"
+                                        <input type="password" wire:model.live="createPassword"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('createPassword')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -307,7 +307,7 @@
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm
                                             Password</label>
-                                        <input type="password" wire:model="createPasswordConfirmation"
+                                        <input type="password" wire:model.live="createPasswordConfirmation"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('createPasswordConfirmation')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -404,7 +404,7 @@
                                                 Editable
                                             </span>
                                         </label>
-                                        <select wire:model="editRole"
+                                        <select wire:model.live="editRole"
                                             class="block w-full mt-1 border-blue-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                             <option value="user">User</option>
                                             <option value="admin">Administrator</option>
@@ -456,7 +456,7 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">New
                                             Password</label>
-                                        <input type="password" wire:model="resetPassword"
+                                        <input type="password" wire:model.live="resetPassword"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('resetPassword')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -467,7 +467,7 @@
                                         <label
                                             class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm
                                             New Password</label>
-                                        <input type="password" wire:model="resetPasswordConfirmation"
+                                        <input type="password" wire:model.live="resetPasswordConfirmation"
                                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-blue-500 focus:ring-blue-500">
                                         @error('resetPasswordConfirmation')
                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -562,7 +562,7 @@
             confirmBtn.onclick = () => {
                 // Call Livewire method directly
                 if (typeof Livewire !== 'undefined') {
-                    Livewire.find('{{ $this->id }}').call('deactivateUser', userId);
+                    Livewire.find('{{ $this->getId() }}').call('deactivateUser', userId);
                 }
                 hideDeactivateModal();
             };

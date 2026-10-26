@@ -163,7 +163,7 @@
 
                                     @if (!$hasUploadedImage)
                                         <div class="relative">
-                                            <input type="file" wire:model="logoUpload" accept="image/*"
+                                            <input type="file" wire:model.live="logoUpload" accept="image/*"
                                                 class="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
                                                 id="logoUploadInput">
                                             <div
@@ -257,7 +257,7 @@
                             <label class="block mb-2 text-sm font-medium text-gray-700">
                                 Judul Halaman <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" wire:model.debounce.300ms="judul"
+                            <input type="text" wire:model.live.debounce.300ms="judul"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="BPS Kota Tanjungpinang">
                             @error('judul')
@@ -271,7 +271,7 @@
                                 Slug URL <span class="text-red-500">*</span>
                                 <span class="text-xs text-gray-500">(yoursite.com/<strong>slug-ini</strong>)</span>
                             </label>
-                            <input type="text" wire:model.debounce.300ms="slug"
+                            <input type="text" wire:model.live.debounce.300ms="slug"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="bps-tanjungpinang" pattern="[a-zA-Z0-9\-_]+">
                             @error('slug')
@@ -284,7 +284,7 @@
                         <!-- Deskripsi -->
                         <div class="mb-4">
                             <label class="block mb-2 text-sm font-medium text-gray-700">Deskripsi (Opsional)</label>
-                            <textarea wire:model.debounce.300ms="deskripsi" rows="3"
+                            <textarea wire:model.live.debounce.300ms="deskripsi" rows="3"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Badan Pusat Statistik Kota Tanjungpinang"></textarea>
                             @error('deskripsi')
@@ -310,7 +310,7 @@
                                         </div>
                                         <div class="flex-1">
                                             <input type="text"
-                                                wire:model.debounce.500ms="links.{{ $index }}.judul"
+                                                wire:model.live.debounce.500ms="links.{{ $index }}.judul"
                                                 class="w-full px-3 py-2 mb-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                 placeholder="Judul Tautan (contoh: 🌐 Website Resmi)">
 
@@ -337,7 +337,7 @@
                                             </div>
 
                                             <input type="url"
-                                                wire:model.debounce.500ms="links.{{ $index }}.url"
+                                                wire:model.live.debounce.500ms="links.{{ $index }}.url"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                 placeholder="https://example.com">
 
@@ -346,7 +346,7 @@
                                                 class="flex items-center gap-2 p-2 mt-3 border border-blue-200 rounded-lg bg-blue-50">
                                                 <label class="flex items-center cursor-pointer">
                                                     <input type="checkbox"
-                                                        wire:model.debounce.500ms="links.{{ $index }}.enableCustomStyling"
+                                                        wire:model.live.debounce.500ms="links.{{ $index }}.enableCustomStyling"
                                                         class="sr-only peer">
                                                     <div
                                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
@@ -365,11 +365,11 @@
                                                             Background</label>
                                                         <div class="flex items-center gap-2">
                                                             <input type="color"
-                                                                wire:model.debounce.500ms="links.{{ $index }}.backgroundColor"
+                                                                wire:model.live.debounce.500ms="links.{{ $index }}.backgroundColor"
                                                                 class="h-8 border border-gray-300 rounded cursor-pointer"
                                                                 value="{{ $link['backgroundColor'] ?? '#FFFFFF' }}">
                                                             <input type="text"
-                                                                wire:model.debounce.500ms="links.{{ $index }}.backgroundColor"
+                                                                wire:model.live.debounce.500ms="links.{{ $index }}.backgroundColor"
                                                                 class="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
                                                                 placeholder="#FFFFFF">
                                                         </div>
@@ -380,11 +380,11 @@
                                                             Teks</label>
                                                         <div class="flex items-center gap-2">
                                                             <input type="color"
-                                                                wire:model.debounce.500ms="links.{{ $index }}.textColor"
+                                                                wire:model.live.debounce.500ms="links.{{ $index }}.textColor"
                                                                 class="h-8 border border-gray-300 rounded cursor-pointer"
                                                                 value="{{ $link['textColor'] ?? '#002366' }}">
                                                             <input type="text"
-                                                                wire:model.debounce.500ms="links.{{ $index }}.textColor"
+                                                                wire:model.live.debounce.500ms="links.{{ $index }}.textColor"
                                                                 class="flex-1 px-2 py-1 text-xs border border-gray-300 rounded"
                                                                 placeholder="#002366">
                                                         </div>
@@ -417,7 +417,7 @@
                                                 <!-- Active Toggle Switch -->
                                                 <label class="flex items-center cursor-pointer">
                                                     <input type="checkbox"
-                                                        wire:model.debounce.500ms="links.{{ $index }}.active"
+                                                        wire:model.live.debounce.500ms="links.{{ $index }}.active"
                                                         class="sr-only peer">
                                                     <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                                                     <span class="ml-3 text-sm font-medium text-gray-700">Aktif</span>
@@ -565,7 +565,7 @@
                                                         </div>
                                                     </div>
                                                     <input type="text"
-                                                        wire:model.lazy="styles.background.gradientStart"
+                                                        wire:model.blur="styles.background.gradientStart"
                                                         id="gradientStartOutput"
                                                         class="w-full px-3 py-2 font-mono text-sm border border-gray-300 rounded-lg"
                                                         placeholder="#002366">
@@ -593,7 +593,7 @@
                                                         </div>
                                                     </div>
                                                     <input type="text"
-                                                        wire:model.lazy="styles.background.gradientEnd"
+                                                        wire:model.blur="styles.background.gradientEnd"
                                                         id="gradientEndOutput"
                                                         class="w-full px-3 py-2 font-mono text-sm border border-gray-300 rounded-lg"
                                                         placeholder="#1D4E5F">
@@ -605,10 +605,10 @@
                                             <label class="block mb-1 text-sm font-medium text-gray-600">Arah Gradien
                                                 <span class="text-xs text-gray-400">(derajat)</span></label>
                                             <div class="flex items-center gap-2">
-                                                <input type="number" wire:model.lazy="styles.background.direction"
+                                                <input type="number" wire:model.blur="styles.background.direction"
                                                     class="w-20 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     min="0" max="360" step="1" placeholder="135">
-                                                <select wire:model.lazy="styles.background.direction"
+                                                <select wire:model.blur="styles.background.direction"
                                                     class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                     <option value="0">0° ⬆️ (Bawah ke Atas)</option>
                                                     <option value="45">45° ↗️ (Kiri Bawah ke Kanan Atas)</option>
@@ -629,7 +629,7 @@
                                             <div class="mb-4">
                                                 <label class="block mb-2 text-sm font-medium text-gray-600">Tipe Latar
                                                     Belakang Wadah</label>
-                                                <select wire:model.lazy="styles.container.backgroundType"
+                                                <select wire:model.blur="styles.container.backgroundType"
                                                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                     <option value="solid">🎨 Warna Solid</option>
                                                     <option value="gradient">🌈 Gradien</option>
@@ -661,7 +661,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.container.backgroundColor"
+                                                            wire:model.blur="styles.container.backgroundColor"
                                                             id="containerBgOutput"
                                                             class="w-full px-3 py-2 font-mono text-sm border border-gray-300 rounded-lg"
                                                             placeholder="#FFFFFF">
@@ -674,7 +674,7 @@
                                                         Sudut
                                                         <span class="text-xs text-gray-400">(px)</span></label>
                                                     <input type="number"
-                                                        wire:model.lazy="styles.container.borderRadius"
+                                                        wire:model.blur="styles.container.borderRadius"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="0" max="50" step="1"
                                                         placeholder="24">
@@ -710,7 +710,7 @@
                                                                 </div>
                                                             </div>
                                                             <input type="text"
-                                                                wire:model.lazy="styles.container.backgroundGradientStart"
+                                                                wire:model.blur="styles.container.backgroundGradientStart"
                                                                 id="containerGradStartOutput"
                                                                 class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                                 placeholder="#FFFFFF">
@@ -740,7 +740,7 @@
                                                                 </div>
                                                             </div>
                                                             <input type="text"
-                                                                wire:model.lazy="styles.container.backgroundGradientEnd"
+                                                                wire:model.blur="styles.container.backgroundGradientEnd"
                                                                 id="containerGradEndOutput"
                                                                 class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                                 placeholder="#F8FAFC">
@@ -753,7 +753,7 @@
                                                             class="block mb-1 text-sm font-medium text-gray-600">Arah
                                                             Gradien</label>
                                                         <select
-                                                            wire:model.lazy="styles.container.backgroundGradientDirection"
+                                                            wire:model.blur="styles.container.backgroundGradientDirection"
                                                             class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                             <option value="0">0° ⬆️ (Bawah ke Atas)</option>
                                                             <option value="45">45° ↗️ (Kiri Bawah ke Kanan Atas)
@@ -795,7 +795,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.container.topGradientStart"
+                                                            wire:model.blur="styles.container.topGradientStart"
                                                             id="topGradientStartOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -819,7 +819,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.container.topGradientEnd"
+                                                            wire:model.blur="styles.container.topGradientEnd"
                                                             id="topGradientEndOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#002366">
@@ -829,7 +829,7 @@
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Tinggi
                                                         <span class="text-xs text-gray-400">(px)</span></label>
                                                     <input type="number"
-                                                        wire:model.lazy="styles.container.topGradientHeight"
+                                                        wire:model.blur="styles.container.topGradientHeight"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="1" max="20" step="1"
                                                         placeholder="4">
@@ -863,7 +863,7 @@
                                                                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider">
                                                             </div>
                                                         </div>
-                                                        <input type="text" wire:model.lazy="styles.title.color"
+                                                        <input type="text" wire:model.blur="styles.title.color"
                                                             id="titleColorOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#002366">
@@ -873,7 +873,7 @@
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Ukuran
                                                         Font
                                                         <span class="text-xs text-gray-400">(px)</span></label>
-                                                    <input type="number" wire:model.lazy="styles.title.fontSize"
+                                                    <input type="number" wire:model.blur="styles.title.fontSize"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="12" max="48" step="1"
                                                         placeholder="26">
@@ -882,7 +882,7 @@
                                                     <label
                                                         class="block mb-1 text-sm font-medium text-gray-600">Ketebalan
                                                         Font</label>
-                                                    <select wire:model.lazy="styles.title.fontWeight"
+                                                    <select wire:model.blur="styles.title.fontWeight"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                         <option value="400">400 - Normal</option>
                                                         <option value="500">500 - Sedang</option>
@@ -917,7 +917,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.description.color"
+                                                            wire:model.blur="styles.description.color"
                                                             id="descColorOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#666666">
@@ -928,7 +928,7 @@
                                                         Font
                                                         <span class="text-xs text-gray-400">(px)</span></label>
                                                     <input type="number"
-                                                        wire:model.lazy="styles.description.fontSize"
+                                                        wire:model.blur="styles.description.fontSize"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="10" max="24" step="1"
                                                         placeholder="15">
@@ -963,7 +963,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.button.backgroundColor"
+                                                            wire:model.blur="styles.button.backgroundColor"
                                                             id="buttonBgOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFFFFF">
@@ -986,7 +986,7 @@
                                                                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider">
                                                             </div>
                                                         </div>
-                                                        <input type="text" wire:model.lazy="styles.button.color"
+                                                        <input type="text" wire:model.blur="styles.button.color"
                                                             id="buttonTextOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#002366">
@@ -1014,7 +1014,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.button.borderColor"
+                                                            wire:model.blur="styles.button.borderColor"
                                                             id="buttonBorderOutput"
                                                             class="w-full px-1 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#EAEAEA">
@@ -1023,7 +1023,7 @@
                                                 <div>
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Lebar
                                                         <span class="text-xs text-gray-400">(px)</span></label>
-                                                    <input type="number" wire:model.lazy="styles.button.borderWidth"
+                                                    <input type="number" wire:model.blur="styles.button.borderWidth"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="0" max="10" step="1"
                                                         placeholder="2">
@@ -1031,7 +1031,7 @@
                                                 <div>
                                                     <label
                                                         class="block mb-1 text-sm font-medium text-gray-600">Gaya</label>
-                                                    <select wire:model.lazy="styles.button.borderStyle"
+                                                    <select wire:model.blur="styles.button.borderStyle"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                         <option value="solid">Garis Solid</option>
                                                         <option value="dashed">Garis Putus-putus</option>
@@ -1042,7 +1042,7 @@
                                                 <div>
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Radius
                                                         <span class="text-xs text-gray-400">(px)</span></label>
-                                                    <input type="number" wire:model.lazy="styles.button.borderRadius"
+                                                    <input type="number" wire:model.blur="styles.button.borderRadius"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="0" max="50" step="1"
                                                         placeholder="12">
@@ -1076,7 +1076,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.buttonHover.backgroundStart"
+                                                            wire:model.blur="styles.buttonHover.backgroundStart"
                                                             id="hoverBgStartOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -1103,7 +1103,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.buttonHover.backgroundEnd"
+                                                            wire:model.blur="styles.buttonHover.backgroundEnd"
                                                             id="hoverBgEndOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFFFFF">
@@ -1130,7 +1130,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.buttonHover.color"
+                                                            wire:model.blur="styles.buttonHover.color"
                                                             id="hoverTextOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#002366">
@@ -1154,7 +1154,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.buttonHover.borderColor"
+                                                            wire:model.blur="styles.buttonHover.borderColor"
                                                             id="hoverBorderOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -1169,7 +1169,7 @@
                                                         Border Hover
                                                         <span class="text-xs text-gray-400">(px)</span></label>
                                                     <input type="number"
-                                                        wire:model.lazy="styles.buttonHover.borderWidth"
+                                                        wire:model.blur="styles.buttonHover.borderWidth"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="0" max="10" step="1"
                                                         placeholder="2">
@@ -1177,7 +1177,7 @@
                                                 <div>
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Gaya
                                                         Border Hover</label>
-                                                    <select wire:model.lazy="styles.buttonHover.borderStyle"
+                                                    <select wire:model.blur="styles.buttonHover.borderStyle"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                         <option value="solid">Garis Solid</option>
                                                         <option value="dashed">Garis Putus-putus</option>
@@ -1206,7 +1206,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.buttonHover.glowColor"
+                                                            wire:model.blur="styles.buttonHover.glowColor"
                                                             id="glowOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -1217,7 +1217,7 @@
                                                         Cahaya
                                                         <span class="text-xs text-gray-400">(px)</span></label>
                                                     <input type="number"
-                                                        wire:model.lazy="styles.buttonHover.glowBlur"
+                                                        wire:model.blur="styles.buttonHover.glowBlur"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                         min="0" max="100" step="5"
                                                         placeholder="30">
@@ -1238,7 +1238,7 @@
                                         <div class="mb-4">
                                             <label class="block mb-2 text-sm font-medium text-gray-600">Tipe Latar
                                                 Belakang Logo</label>
-                                            <select wire:model.lazy="styles.logo.backgroundType"
+                                            <select wire:model.blur="styles.logo.backgroundType"
                                                 class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                 <option value="solid">🎨 Warna Solid</option>
                                                 <option value="gradient">🌈 Gradien</option>
@@ -1271,7 +1271,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.logo.backgroundColor"
+                                                            wire:model.blur="styles.logo.backgroundColor"
                                                             id="logoBgOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFFFFF">
@@ -1299,7 +1299,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.logo.borderColor"
+                                                            wire:model.blur="styles.logo.borderColor"
                                                             id="logoRingOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -1336,7 +1336,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.logo.backgroundGradientStart"
+                                                            wire:model.blur="styles.logo.backgroundGradientStart"
                                                             id="logoGradStartOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFFFFF">
@@ -1365,7 +1365,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.logo.backgroundGradientEnd"
+                                                            wire:model.blur="styles.logo.backgroundGradientEnd"
                                                             id="logoGradEndOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#F8FAFC">
@@ -1376,7 +1376,7 @@
                                                 <div>
                                                     <label class="block mb-1 text-sm font-medium text-gray-600">Arah
                                                         Gradien</label>
-                                                    <select wire:model.lazy="styles.logo.backgroundGradientDirection"
+                                                    <select wire:model.blur="styles.logo.backgroundGradientDirection"
                                                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                         <option value="0">0° ⬆️ (Bawah ke Atas)</option>
                                                         <option value="45">45° ↗️ (Kiri Bawah ke Kanan Atas)
@@ -1418,7 +1418,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.logo.borderColor"
+                                                            wire:model.blur="styles.logo.borderColor"
                                                             id="logoRingOutputGrad"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#FFD700">
@@ -1434,7 +1434,7 @@
                                                 <label class="block mb-1 text-sm font-medium text-gray-600">Lebar
                                                     Lingkaran
                                                     <span class="text-xs text-gray-400">(px)</span></label>
-                                                <input type="number" wire:model.lazy="styles.logo.borderWidth"
+                                                <input type="number" wire:model.blur="styles.logo.borderWidth"
                                                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     min="0" max="20" step="1" placeholder="3">
                                             </div>
@@ -1443,7 +1443,7 @@
                                             <div>
                                                 <label class="block mb-1 text-sm font-medium text-gray-600">Gaya
                                                     Lingkaran</label>
-                                                <select wire:model.lazy="styles.logo.borderStyle"
+                                                <select wire:model.blur="styles.logo.borderStyle"
                                                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                                     <option value="solid">Garis Solid</option>
                                                     <option value="dashed">Garis Putus-putus</option>
@@ -1461,7 +1461,7 @@
                                                 <label class="block mb-1 text-sm font-medium text-gray-600">Radius
                                                     Sudut
                                                     <span class="text-xs text-gray-400">(px)</span></label>
-                                                <input type="number" wire:model.lazy="styles.logo.borderRadius"
+                                                <input type="number" wire:model.blur="styles.logo.borderRadius"
                                                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     min="0" max="100" step="1"
                                                     placeholder="50 (lingkaran penuh)">
@@ -1493,7 +1493,7 @@
                                                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider">
                                                         </div>
                                                     </div>
-                                                    <input type="text" wire:model.lazy="styles.footer.color"
+                                                    <input type="text" wire:model.blur="styles.footer.color"
                                                         id="footerTextOutput"
                                                         class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                         placeholder="#999999">
@@ -1505,7 +1505,7 @@
                                                 <label class="block mb-1 text-sm font-medium text-gray-600">Ukuran
                                                     Font
                                                     <span class="text-xs text-gray-400">(px)</span></label>
-                                                <input type="number" wire:model.lazy="styles.footer.fontSize"
+                                                <input type="number" wire:model.blur="styles.footer.fontSize"
                                                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     min="8" max="20" step="1" placeholder="12">
                                             </div>
@@ -1533,7 +1533,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="text"
-                                                            wire:model.lazy="styles.footer.borderColor"
+                                                            wire:model.blur="styles.footer.borderColor"
                                                             id="footerBorderOutput"
                                                             class="w-full px-2 py-1 font-mono text-xs border border-gray-300 rounded"
                                                             placeholder="#EEEEEE">
@@ -1548,7 +1548,7 @@
                                                             dari Konten
                                                             <span class="text-xs text-gray-400">(px)</span></label>
                                                         <input type="number"
-                                                            wire:model.lazy="styles.footer.marginTop"
+                                                            wire:model.blur="styles.footer.marginTop"
                                                             class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             min="10" max="100" step="5"
                                                             placeholder="30">
@@ -1560,7 +1560,7 @@
                                                             dari Garis
                                                             <span class="text-xs text-gray-400">(px)</span></label>
                                                         <input type="number"
-                                                            wire:model.lazy="styles.footer.paddingTop"
+                                                            wire:model.blur="styles.footer.paddingTop"
                                                             class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             min="5" max="50" step="5"
                                                             placeholder="20">
@@ -1791,7 +1791,7 @@
                                             semua tab styling!
                                         </div>
 
-                                        <textarea wire:model="stylesJson" rows="16"
+                                        <textarea wire:model.live="stylesJson" rows="16"
                                             class="w-full px-3 py-2 font-mono text-xs border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                                             placeholder='Paste JSON styling dari AI atau edit manual'></textarea>
 
@@ -2206,8 +2206,8 @@
             // ===== LIVEWIRE HOOKS (SATU TEMPAT UNTUK SEMUA) =====
 
             // Hook untuk initial render (page load pertama) - tunggu Livewire load data dulu
-            Livewire.hook('component.initialized', (component) => {
-                if (component.fingerprint.name !== 'edit-tautan') return;
+            Livewire.hook('component.init', ({ component }) => {
+                if (component.name !== 'edit-tautan') return;
 
                 console.log('🎯 EditTautan component initialized - waiting for Livewire data load...');
 
@@ -2222,7 +2222,7 @@
 
             // Hook rendered tidak didukung di Livewire versi ini - comment out
             // Livewire.hook('rendered', (component) => {
-            //     if (component.fingerprint.name !== 'edit-tautan') return;
+            //     if (component.name !== 'edit-tautan') return;
             //
             //     console.log('🎯 EditTautan component rendered - ensuring form fields are synced...');
             //
@@ -2235,52 +2235,58 @@
             // });
 
             // Hook utama untuk update setelah Livewire response
-            Livewire.hook('message.processed', (message, component) => {
-                if (component.fingerprint.name !== 'edit-tautan') return;
+            Livewire.hook('commit', ({ component, succeed }) => {
+                succeed(() => {
+                    queueMicrotask(() => {
+                        if (component.name !== 'edit-tautan') return;
 
-                try {
-                    // Update preview iframe
-                    updatePreviewIframe();
+                        try {
+                            // Update preview iframe
+                            updatePreviewIframe();
 
-                    // Update radio button state berdasarkan Livewire state terbaru
-                    updateRadioButtonsFromLivewire(component);
+                            // Update radio button state berdasarkan Livewire state terbaru
+                            updateRadioButtonsFromLivewire(component);
 
-                    // Update color pickers from loaded styles (IMPORTANT for edit mode)
-                    setTimeout(() => {
-                        updateAllColorPickersFromStyles();
-                        updateQRColorPickersFromLivewire(); // Special handling for QR pickers
-                        updateAllRangeSlidersFromLivewire();
-                        // Refresh QR colors from Livewire state
-                        refreshQRColorsFromLivewire();
-                        // Update hover effects in preview
-                        const iframe = document.getElementById('previewFrame');
-                        if (iframe) {
-                            addHoverEffectsToPreview(iframe);
+                            // Update color pickers from loaded styles (IMPORTANT for edit mode)
+                            setTimeout(() => {
+                                updateAllColorPickersFromStyles();
+                                updateQRColorPickersFromLivewire(); // Special handling for QR pickers
+                                updateAllRangeSlidersFromLivewire();
+                                // Refresh QR colors from Livewire state
+                                refreshQRColorsFromLivewire();
+                                // Update hover effects in preview
+                                const iframe = document.getElementById('previewFrame');
+                                if (iframe) {
+                                    addHoverEffectsToPreview(iframe);
+                                }
+                            }, 300);
+
+                            // Reset processing flag
+                            isProcessingUpload = false;
+
+                            console.log('📡 Livewire message processed successfully');
+                        } catch (error) {
+                            console.warn('⚠️ Error in Livewire message.processed hook:', error);
                         }
-                    }, 300);
-
-                    // Reset processing flag
-                    isProcessingUpload = false;
-
-                    console.log('📡 Livewire message processed successfully');
-                } catch (error) {
-                    console.warn('⚠️ Error in Livewire message.processed hook:', error);
-                }
+                    });
+                });
             });
 
             // Hook untuk validation errors
-            Livewire.hook('message.failed', (message, component) => {
-                if (message.updateQueue && message.updateQueue.some(update => update.method ===
-                        'saveToDatabase')) {
-                    showToast('❌ Mohon periksa form, ada data yang belum valid!', 'error');
-                }
+            Livewire.hook('commit', ({ commit, fail }) => {
+                fail(() => {
+                        if (commit.calls && commit.calls.some(update => update.method ===
+                                'saveToDatabase')) {
+                            showToast('❌ Mohon periksa form, ada data yang belum valid!', 'error');
+                        }
+                });
             });
 
             // Hook untuk prevent update during upload
-            Livewire.hook('element.updating', (el, component) => {
+            Livewire.hook('morph.updating', ({ el, skip }) => {
                 if (isProcessingUpload && (el.id === 'previewFrame' || el.id === 'miniPreview')) {
                     console.log('🚫 Preventing update during upload for element:', el.id);
-                    return false;
+                    skip();
                 }
             });
 
@@ -2299,7 +2305,7 @@
                 showToast('🎉 Tautan berhasil disimpan ke database!', 'success');
             });
 
-            Livewire.on('databaseError', (message) => {
+            Livewire.on('databaseError', ({ message }) => {
                 showToast('❌ Gagal simpan: ' + message, 'error');
             });
 
@@ -2308,7 +2314,7 @@
                 showToast('📄 HTML berhasil dibuat! Siap untuk GitHub Pages.', 'success');
             });
 
-            Livewire.on('htmlError', (message) => {
+            Livewire.on('htmlError', ({ message }) => {
                 showToast('❌ Gagal generate HTML: ' + message, 'error');
             });
 
@@ -2387,9 +2393,9 @@
 
         function updateRadioButtonsFromLivewire(component) {
             try {
-                const useUploadedLogo = component.get('useUploadedLogo');
-                const hasUploadedImage = component.get('hasUploadedImage');
-                const currentLogoSource = component.get('getCurrentLogoSource');
+                const useUploadedLogo = component.$wire.get('useUploadedLogo');
+                const hasUploadedImage = component.$wire.get('hasUploadedImage');
+                const currentLogoSource = (useUploadedLogo ? component.$wire.get('logoPreviewUrl') : component.$wire.get('logoUrl'));
 
                 // PERBAIKAN: Update radio buttons TANPA BLOCKING
                 updateRadioButtonState(useUploadedLogo, hasUploadedImage);

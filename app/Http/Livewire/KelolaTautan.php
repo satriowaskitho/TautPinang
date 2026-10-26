@@ -55,7 +55,6 @@ class KelolaTautan extends Component
         'search' => ['except' => ''],
         'sortBy' => ['except' => 'created_at'],
         'sortDir' => ['except' => 'desc'],
-        'page' => ['except' => 1],
         'filterStatus' => ['except' => 'all'],
         'filterImageType' => ['except' => 'all'],
         'showHistoryTab' => ['except' => false],
@@ -161,7 +160,7 @@ class KelolaTautan extends Component
         $this->resetPage();
     }
 
-    public function sortBy($field)
+    public function sortByField($field)
     {
         if ($this->sortBy === $field) {
             $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
@@ -196,7 +195,7 @@ class KelolaTautan extends Component
                 $this->showDeleteModal = false;
                 $this->selectedTautan = null;
 
-                $this->emit('tautanDeleted');
+                $this->dispatch('tautanDeleted');
                 session()->flash('success', 'Tautan berhasil dihapus!');
             } else {
                 session()->flash('error', 'Tautan tidak ditemukan atau Anda tidak memiliki izin untuk menghapusnya.');
@@ -242,7 +241,7 @@ class KelolaTautan extends Component
                 $this->showEditModal = false;
                 $this->selectedTautan = null;
 
-                $this->emit('tautanUpdated');
+                $this->dispatch('tautanUpdated');
                 session()->flash('success', 'Tautan berhasil diperbarui!');
             } else {
                 session()->flash('error', 'Hanya pembuat tautan yang dapat mengedit konten ini. Admin dapat mengaktifkan/menonaktifkan tautan.');
@@ -593,7 +592,7 @@ class KelolaTautan extends Component
                 $this->showDeletedModal = false;
                 $this->selectedDeletedTautan = null;
 
-                $this->emit('tautanRecovered');
+                $this->dispatch('tautanRecovered');
                 session()->flash('success', 'Tautan berhasil dipulihkan!');
             } else {
                 session()->flash('error', 'Tautan tidak ditemukan atau Anda tidak memiliki izin untuk memulihkannya.');
@@ -644,7 +643,7 @@ class KelolaTautan extends Component
                 $this->showForceDeleteModal = false;
                 $this->selectedDeletedTautan = null;
 
-                $this->emit('tautanForceDeleted');
+                $this->dispatch('tautanForceDeleted');
                 session()->flash('success', 'Tautan berhasil dihapus permanen!');
             } else {
                 session()->flash('error', 'Tautan tidak ditemukan atau Anda tidak memiliki izin untuk menghapusnya.');

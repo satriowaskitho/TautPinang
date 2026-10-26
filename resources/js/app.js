@@ -1,12 +1,6 @@
 import "./bootstrap";
 
-import Alpine from "alpinejs";
-import focus from "@alpinejs/focus";
-window.Alpine = Alpine;
-
-Alpine.plugin(focus);
-
-Alpine.start();
+// Livewire 3 provides Alpine and the focus plugin through @livewireScripts.
 // Seamless Navigation JavaScript untuk LinkMaker BPS
 document.addEventListener("DOMContentLoaded", function () {
     // Loading Indicator

@@ -207,9 +207,6 @@
 
     @livewireScripts
 
-    <!-- Alpine.js (required for Livewire 3) -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
 

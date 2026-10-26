@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Recheck route role restrictions on every Livewire update request.
+        Livewire::addPersistentMiddleware([RoleMiddleware::class]);
+
         // Force HTTPS in production
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
